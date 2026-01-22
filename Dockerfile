@@ -24,7 +24,7 @@ COPY --from=frontend-builder /app/frontend/dist ./frontend/dist
 RUN mkdir -p backend/data backend/photos
 
 # Expose port
-EXPOSE 8080
+EXPOSE 7554
 
 # Run the application
 WORKDIR /app/backend
