@@ -1,0 +1,10 @@
+services:
+  memorial-app:
+    image: memorial-app:latest
+    container_name: memorial-app
+    restart: always
+    ports:
+      - "80:8080"
+    volumes:
+      - ./data:/app/backend/data
+      - ./photos:/app/backend/photos

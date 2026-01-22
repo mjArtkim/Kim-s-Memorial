@@ -1,0 +1,14 @@
+.git
+.gitignore
+.dockerignore
+Dockerfile
+deploy.sh
+docker-compose.yml
+node_modules
+frontend/node_modules
+backend/__pycache__
+backend/*.pyc
+.version
+*.tar.gz
+venv
+photos

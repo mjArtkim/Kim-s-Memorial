@@ -1,0 +1,26 @@
+# System & IDE
+.DS_Store
+.idea/
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+venv/
+*.log
+
+# Node.js / Frontend
+node_modules/
+frontend/node_modules/
+frontend/dist/
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+
+# Application Data & Secrets
+data/
+.env
+
+# Deployment artifacts
+.version
+*.tar.gz
