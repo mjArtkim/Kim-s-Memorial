@@ -127,6 +127,7 @@
 Mobile View - https://xd.adobe.com/view/a701cdfd-8689-40e4-a5b4-18ad3f59a853-f252/
 
 Web View - https://xd.adobe.com/view/78c46b05-6387-4c79-8a28-937852223571-2d97/
+
 ---
 
 ## 7. IA 구조도
