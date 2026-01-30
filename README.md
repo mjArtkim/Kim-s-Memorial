@@ -120,9 +120,15 @@
 * `npm run build` 시 에러 없이 정상적으로 빌드되어야 합니다.
 4. **제작자 Credit:** 사이트 최하단(Footer)에 작업자의 아이덴티티를 나타낼 수 있는 로고, 이름, 포트폴리오 링크('Designed & Developed by...') 등을 자유롭게 넣어주세요. 가족이 같이 만드는 공간인 만큼 제작자의 흔적을 남겨주시면 좋겠습니다.
 
-
 ---
 
-## 6. IA 구조도
+##6. Design View
+
+Mobile View - https://xd.adobe.com/view/a701cdfd-8689-40e4-a5b4-18ad3f59a853-f252/
+
+Web View - https://xd.adobe.com/view/78c46b05-6387-4c79-8a28-937852223571-2d97/
+---
+
+## 7. IA 구조도
 
 <img src="/photos/IA.png" width="100%">
