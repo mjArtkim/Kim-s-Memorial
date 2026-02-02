@@ -1,3 +1,65 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    --font-en: 'EB Garamond', 'Times New Roman', serif;
+    --font-ko: 'Gowun Batang', 'Noto Serif KR', serif;
+    --font-zh-hans: 'Noto Serif SC', 'Noto Serif CJK SC', serif;
+    --font-zh-hant: 'Noto Serif TC', 'Noto Serif CJK TC', serif;
+    --mblue: #a5c1ff;
+    --mdark: #1428a0;
+  }
+
+  html {
+    font-family:
+      var(--font-en),
+      var(--font-ko),
+      var(--font-zh-hans),
+      var(--font-zh-hant),
+      serif;
+  }
+}
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+*:before,
+*:after {
+  box-sizing: border-box;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #8da6b9;
+  border-radius: 9999px;
+}
+body {
+  font-size: 16px;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+a {
+  text-decoration: none;
+  cursor: pointer;
+}
+ol,
+ul {
+  list-style-type: none;
+}
+button {
+  cursor: pointer;
+}
+button:focus,
+button:focus-visible {
+  outline: none;
+}
