@@ -2,6 +2,13 @@
 import { useI18n } from 'vue-i18n'
 
 const { locale } = useI18n()
+
+const handleLocaleChange = (event: Event) => {
+  const target = event.target as HTMLSelectElement | null
+  if (!target) return
+  const nextLocale = target.value
+  localStorage.setItem('app-locale', nextLocale)
+}
 </script>
 
 <template>
@@ -11,6 +18,7 @@ const { locale } = useI18n()
       <select
         class="appearance-none rounded-full border border-[var(--stroke)] bg-[var(--surface)] px-3 py-1 pr-7 text-xs font-semibold text-[var(--text)] focus:outline-none focus:border-neonpink"
         v-model="locale"
+        @change="handleLocaleChange"
       >
         <option value="en">EN</option>
         <option value="ko">KR</option>

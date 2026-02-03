@@ -13,10 +13,17 @@ const messages = {
 
 export type MessageSchema = typeof messages
 
+const getInitialLocale = () => {
+  if (typeof window === 'undefined') return 'en'
+  const savedLocale = localStorage.getItem('app-locale')
+  if (!savedLocale) return 'en'
+  return Object.prototype.hasOwnProperty.call(messages, savedLocale) ? savedLocale : 'en'
+}
+
 const i18n = createI18n({
   legacy: false,
   globalInjection: true,
-  locale: 'en',
+  locale: getInitialLocale(),
   fallbackLocale: 'en',
   messages,
 })
