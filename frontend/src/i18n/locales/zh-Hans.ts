@@ -107,6 +107,21 @@ const zhHans = {
 부디 아픔없는 곳에서 편히 쉬시면서 저희를 굽어살펴주십시오.`,
       },
     ],
+    timeline: [
+      {
+        year: '1948',
+        date: '09.30',
+        title: '出生于大邱',
+        place: '韩国 大邱',
+        icon: 'calendar_month',
+      },
+      {
+        year: '2026',
+        date: '01.19',
+        title: '安详辞世',
+        place: '韩国 大邱',
+      },
+    ],
     openLetter: '阅读追悼文',
     closeLetter: '关闭',
   },

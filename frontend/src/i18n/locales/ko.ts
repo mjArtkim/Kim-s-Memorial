@@ -107,6 +107,21 @@ const ko = {
 부디 아픔없는 곳에서 편히 쉬시면서 저희를 굽어살펴주십시오.`,
       },
     ],
+    timeline: [
+      {
+        year: '1948',
+        date: '09.30',
+        title: '대구 출생',
+        place: '대한민국 대구',
+        icon: 'calendar_month',
+      },
+      {
+        year: '2026',
+        date: '01.19',
+        title: '평온히 별세',
+        place: '대한민국 대구',
+      },
+    ],
     openLetter: '추모글 보기',
     closeLetter: '닫기',
   },

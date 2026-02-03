@@ -14,6 +14,7 @@ import GuestbookView from '@/components/part/GuestbookView.vue'
 const { t, locale } = useI18n()
 const heroRef = ref<HTMLDivElement | null>(null)
 const photoRef = ref<HTMLDivElement | null>(null)
+const stickyBarRef = ref<HTMLDivElement | null>(null)
 const miniBarRef = ref<HTMLDivElement | null>(null)
 const miniAvatarRef = ref<HTMLDivElement | null>(null)
 let photoTween: gsap.core.Tween | null = null
@@ -28,7 +29,7 @@ const scrollToTop = () => {
 }
 
 onMounted(() => {
-  if (!photoRef.value || !miniBarRef.value || !miniAvatarRef.value || !heroRef.value) return
+  if (!photoRef.value || !miniBarRef.value || !heroRef.value) return
 
   const getHeroScrollEnd = () => {
     if (!heroRef.value) return '+=0'
@@ -40,14 +41,19 @@ onMounted(() => {
     return `top+=${Math.round(heroRef.value.offsetHeight * 1)} top`
   }
 
+  const getMiniBarStart = () => {
+    if (!heroRef.value) return 'top top'
+    return `top+=${Math.round(heroRef.value.offsetHeight * 0.6)} top`
+  }
+
   const applyStartSize = () => {
-    if (!photoRef.value || !miniAvatarRef.value) return
+    if (!photoRef.value) return
     gsap.set(photoRef.value, {
       x: 0,
       y: 0,
       scale: 1,
       opacity: 1,
-      clipPath: 'circle(200% at 50% 50%)',
+      clipPath: 'circle(250% at 50% 50%)',
     })
     ScrollTrigger.refresh()
   }
@@ -60,30 +66,23 @@ onMounted(() => {
   window.addEventListener('resize', handleResize)
 
   const updatePhotoTween = () => {
-    if (!photoRef.value || !miniAvatarRef.value) return
+    if (!photoRef.value) return
     const photoRect = photoRef.value.getBoundingClientRect()
-    const avatarRect = miniAvatarRef.value.getBoundingClientRect()
-    const scale = Math.max(avatarRect.width / photoRect.width, avatarRect.height / photoRect.height)
-    const scaledWidth = photoRect.width * scale
-    const scaledHeight = photoRect.height * scale
-    const avatarCenterX = avatarRect.left + avatarRect.width / 1.2
-    const avatarCenterY = avatarRect.top + avatarRect.height / 1.2
-    const x = avatarCenterX - photoRect.left - scaledWidth / 1.2
-    const y = avatarCenterY - photoRect.top - scaledHeight / 1.2
-
+    const targetScale = 0.8
+    const targetY = -Math.round(photoRect.height * 0.12)
     if (photoTween) photoTween.kill()
     if (photoOpacityTween) photoOpacityTween.kill()
     photoTween = gsap.to(photoRef.value, {
-      x,
-      y,
-      scale,
+      x: 0,
+      y: targetY,
+      scale: targetScale,
       clipPath: 'circle(100% at 50% 50%)',
       ease: 'none',
       scrollTrigger: {
         trigger: heroRef.value,
         start: 'top top',
         end: getHeroScrollEnd,
-        scrub: true,
+        scrub: 0.3,
         invalidateOnRefresh: true,
       },
     })
@@ -95,7 +94,7 @@ onMounted(() => {
         trigger: heroRef.value,
         start: getPhotoFadeStart,
         end: 'bottom top',
-        scrub: true,
+        scrub: 0.3,
         invalidateOnRefresh: true,
       },
     })
@@ -115,6 +114,16 @@ onMounted(() => {
       ease: 'power1.out',
       overwrite: 'auto',
     })
+    if (stickyBarRef.value) {
+      gsap.to(stickyBarRef.value, {
+        opacity: 1,
+        y: 0,
+        pointerEvents: 'auto',
+        duration: 0.25,
+        ease: 'power1.out',
+        overwrite: 'auto',
+      })
+    }
   }
 
   const hideMiniBar = () => {
@@ -129,8 +138,25 @@ onMounted(() => {
       ease: 'power1.out',
       overwrite: 'auto',
     })
+    if (stickyBarRef.value) {
+      gsap.to(stickyBarRef.value, {
+        opacity: 0,
+        y: -12,
+        pointerEvents: 'none',
+        duration: 0.2,
+        ease: 'power1.out',
+        overwrite: 'auto',
+      })
+    }
   }
 
+  if (stickyBarRef.value) {
+    gsap.set(stickyBarRef.value, {
+      opacity: 0,
+      y: -12,
+      pointerEvents: 'none',
+    })
+  }
   gsap.set(miniBarRef.value, {
     opacity: 0,
     y: -10,
@@ -140,15 +166,10 @@ onMounted(() => {
   })
   ScrollTrigger.create({
     trigger: heroRef.value,
-    start: 'top top',
+    start: getMiniBarStart,
     end: 'bottom top',
-    onUpdate: (self) => {
-      if (self.progress >= 0.4) {
-        showMiniBar()
-      } else {
-        hideMiniBar()
-      }
-    },
+    onEnter: showMiniBar,
+    onLeaveBack: hideMiniBar,
     invalidateOnRefresh: true,
   })
 
@@ -188,7 +209,8 @@ watch(
 <template>
   <div class="h-full py-9">
     <div
-      class="sticky top-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 my-5 py-3 bg-white/80 backdrop-blur h-32"
+      ref="stickyBarRef"
+      class="fixed top-0 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r from-white/0 to-white backdrop-blur filter blur-sm h-32 opacity-0"
     ></div>
     <div
       ref="miniBarRef"
@@ -209,17 +231,17 @@ watch(
     </div>
     <div class="h-screen grid grid-rows-[auto_1fr] gap-8">
       <LanguageSelect class="px-7 justify-self-end"></LanguageSelect>
-      <div ref="heroRef" id="intro" class="grid scroll-mt-24 grid-rows-[auto_1fr]">
+      <div ref="heroRef" class="grid scroll-mt-24 grid-rows-[auto_1fr]">
         <div class="px-7 flex flex-col justify-center items-center gap-10">
           <div class="text-6xl font-bold">Memorial</div>
           <div class="text-5xl font-semibold">{{ t('app.title') }}</div>
           <div class="text-base">1948.09.30 ~ 2026.01.19</div>
           <div class="text-base">South Korea</div>
         </div>
-        <div class="">
+        <div>
           <div
             ref="photoRef"
-            class="h-full w-full overflow-hidden origin-top-left [will-change:transform]"
+            class="h-full w-full overflow-hidden origin-top [will-change:transform]"
           >
             <img
               src="@/assets/img/main.png"
