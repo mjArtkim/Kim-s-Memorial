@@ -231,7 +231,7 @@ watch(
     </div>
     <div class="h-screen grid grid-rows-[auto_1fr] gap-8">
       <LanguageSelect class="px-7 justify-self-end"></LanguageSelect>
-      <div ref="heroRef" id="intro" class="grid scroll-mt-24 grid-rows-[auto_1fr]">
+      <div ref="heroRef" class="grid scroll-mt-24 grid-rows-[auto_1fr]">
         <div class="px-7 flex flex-col justify-center items-center gap-10">
           <div class="text-6xl font-bold">Memorial</div>
           <div class="text-5xl font-semibold">{{ t('app.title') }}</div>
