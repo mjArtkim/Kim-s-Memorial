@@ -15,6 +15,13 @@
   html {
     font-family: var(--font-en), var(--font-ko), var(--font-zh-hans), var(--font-zh-hant), serif;
   }
+  .section-title {
+    @apply text-4xl font-semibold relative inline-block;
+  }
+  .section-title::after {
+    content: '';
+    @apply absolute left-0 -bottom-2 h-[3px] w-full origin-left scale-x-100 bg-[--mblue];
+  }
 }
 * {
   padding: 0;

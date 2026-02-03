@@ -1,2 +1,6 @@
 <script setup lang="ts"></script>
-<template></template>
+<template>
+  <div>
+    <div class="section-title">Achievements</div>
+  </div>
+</template>

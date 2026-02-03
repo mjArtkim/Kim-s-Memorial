@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import LanguageSelect from '@/components/unit/LanguageSelect.vue'
 import { useI18n } from 'vue-i18n'
-import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
+import { nextTick, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import GndBar from '@/components/unit/GndBar.vue'
@@ -131,7 +131,13 @@ onMounted(() => {
     })
   }
 
-  gsap.set(miniBarRef.value, { opacity: 0, y: -10, pointerEvents: 'none' })
+  gsap.set(miniBarRef.value, {
+    opacity: 0,
+    y: -10,
+    x: 0,
+    xPercent: -50,
+    pointerEvents: 'none',
+  })
   ScrollTrigger.create({
     trigger: heroRef.value,
     start: 'top top',
@@ -167,8 +173,13 @@ onBeforeUnmount(() => {
 
 watch(
   locale,
-  (nextLocale) => {
+  async (nextLocale) => {
     document.documentElement.lang = nextLocale
+    localStorage.setItem('app-locale', nextLocale)
+    await nextTick()
+    if (miniBarRef.value) {
+      gsap.set(miniBarRef.value, { x: 0, xPercent: -50 })
+    }
   },
   { immediate: true },
 )
@@ -177,8 +188,11 @@ watch(
 <template>
   <div class="h-full py-9">
     <div
+      class="sticky top-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 my-5 py-3 bg-white/80 backdrop-blur h-32"
+    ></div>
+    <div
       ref="miniBarRef"
-      class="fixed left-1/2 top-7 z-50 inline-flex -translate-x-1/2 items-center gap-2.5 rounded-md bg-white/90 px-3 py-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.08)] opacity-0 cursor-pointer"
+      class="fixed left-1/2 top-7 z-50 inline-flex items-center gap-2.5 rounded-md bg-white/90 px-3 py-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.08)] opacity-0 cursor-pointer"
       role="button"
       tabindex="0"
       aria-label="Scroll to top"
@@ -216,27 +230,26 @@ watch(
         </div>
       </div>
     </div>
-    <section class="flex flex-col items-center px-7 gap-12 scroll-mt-24">
+    <section class="flex flex-col items-center px-7 gap-12 scroll-mt-24 pb-10">
       <div class="material-symbols-rounded text-[--mblue] text-5xl">candle</div>
       <div class="text-center text-[18px]">
-        척박한 중국 시장을 개척한 1호 주재원이자, 뜨거운 열정과 유머, 품격으로 모두의 존경을 받는
-        깊은 바다와 같은 김병후 님을 기억하며…
+        {{ t('app.description') }}
       </div>
     </section>
     <GndBar />
-    <section id="intro" class="px-7 py-16 scroll-mt-24">
+    <section id="intro" class="p-7 scroll-mt-24">
       <IntroView />
     </section>
-    <section id="achiev" class="px-7 py-16 scroll-mt-24">
+    <section id="achiev" class="p-7 scroll-mt-24">
       <AchievementsView />
     </section>
-    <section id="gall" class="px-7 py-16 scroll-mt-24">
+    <section id="gall" class="p-7 scroll-mt-24">
       <GalleryView />
     </section>
-    <section id="loca" class="px-7 py-16 scroll-mt-24">
+    <section id="loca" class="p-7 scroll-mt-24">
       <LocationView />
     </section>
-    <section id="guest" class="px-7 py-16 scroll-mt-24">
+    <section id="guest" class="p-7 scroll-mt-24">
       <GuestbookView />
     </section>
   </div>
