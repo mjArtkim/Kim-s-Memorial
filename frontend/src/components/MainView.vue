@@ -5,6 +5,11 @@ import { onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { gsap } from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import GndBar from '@/components/unit/GndBar.vue'
+import IntroView from '@/components/part/IntroView.vue'
+import AchievementsView from '@/components/part/AchievementsView.vue'
+import GalleryView from '@/components/part/GalleryView.vue'
+import LocationView from '@/components/part/LocationView.vue'
+import GuestbookView from '@/components/part/GuestbookView.vue'
 
 const { t, locale } = useI18n()
 const heroRef = ref<HTMLDivElement | null>(null)
@@ -17,6 +22,10 @@ let handleResize: (() => void) | null = null
 let isMiniBarVisible = false
 
 gsap.registerPlugin(ScrollTrigger)
+
+const scrollToTop = () => {
+  window.scrollTo({ top: 0, behavior: 'smooth' })
+}
 
 onMounted(() => {
   if (!photoRef.value || !miniBarRef.value || !miniAvatarRef.value || !heroRef.value) return
@@ -169,7 +178,11 @@ watch(
   <div class="h-full py-9">
     <div
       ref="miniBarRef"
-      class="fixed left-1/2 top-7 z-50 inline-flex -translate-x-1/2 items-center gap-2.5 rounded-md bg-white/90 px-3 py-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.08)] opacity-0"
+      class="fixed left-1/2 top-7 z-50 inline-flex -translate-x-1/2 items-center gap-2.5 rounded-md bg-white/90 px-3 py-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.08)] opacity-0 cursor-pointer"
+      role="button"
+      tabindex="0"
+      aria-label="Scroll to top"
+      @click="scrollToTop"
     >
       <div ref="miniAvatarRef" class="h-12 w-12 overflow-hidden rounded-md border border-black/10">
         <img
@@ -182,7 +195,7 @@ watch(
     </div>
     <div class="h-screen grid grid-rows-[auto_1fr] gap-8">
       <LanguageSelect class="px-7 justify-self-end"></LanguageSelect>
-      <div ref="heroRef" class="grid grid-rows-[auto_1fr]">
+      <div ref="heroRef" id="intro" class="grid scroll-mt-24 grid-rows-[auto_1fr]">
         <div class="px-7 flex flex-col justify-center items-center gap-10">
           <div class="text-6xl font-bold">Memorial</div>
           <div class="text-5xl font-semibold">{{ t('app.title') }}</div>
@@ -203,13 +216,28 @@ watch(
         </div>
       </div>
     </div>
-    <div class="flex flex-col items-center px-7">
-      <div class="material-symbols-rounded text-[--mblue]">candle</div>
+    <section class="flex flex-col items-center px-7 gap-12 scroll-mt-24">
+      <div class="material-symbols-rounded text-[--mblue] text-5xl">candle</div>
       <div class="text-center text-[18px]">
         척박한 중국 시장을 개척한 1호 주재원이자, 뜨거운 열정과 유머, 품격으로 모두의 존경을 받는
         깊은 바다와 같은 김병후 님을 기억하며…
       </div>
-    </div>
+    </section>
     <GndBar />
+    <section id="intro" class="px-7 py-16 scroll-mt-24">
+      <IntroView />
+    </section>
+    <section id="achiev" class="px-7 py-16 scroll-mt-24">
+      <AchievementsView />
+    </section>
+    <section id="gall" class="px-7 py-16 scroll-mt-24">
+      <GalleryView />
+    </section>
+    <section id="loca" class="px-7 py-16 scroll-mt-24">
+      <LocationView />
+    </section>
+    <section id="guest" class="px-7 py-16 scroll-mt-24">
+      <GuestbookView />
+    </section>
   </div>
 </template>

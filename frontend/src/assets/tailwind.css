@@ -4,21 +4,16 @@
 
 @layer base {
   :root {
-    --font-en: 'EB Garamond', 'Times New Roman', serif;
-    --font-ko: 'Gowun Batang', 'Noto Serif KR', serif;
-    --font-zh-hans: 'Noto Serif SC', 'Noto Serif CJK SC', serif;
-    --font-zh-hant: 'Noto Serif TC', 'Noto Serif CJK TC', serif;
+    --font-en: 'EB Garamond';
+    --font-ko: 'Gowun Batang';
+    --font-zh-hans: 'Noto Serif SC', 'Noto Serif CJK SC';
+    --font-zh-hant: 'Noto Serif TC', 'Noto Serif CJK TC';
     --mblue: #a5c1ff;
     --mdark: #1428a0;
   }
 
   html {
-    font-family:
-      var(--font-en),
-      var(--font-ko),
-      var(--font-zh-hans),
-      var(--font-zh-hant),
-      serif;
+    font-family: var(--font-en), var(--font-ko), var(--font-zh-hans), var(--font-zh-hant), serif;
   }
 }
 * {
