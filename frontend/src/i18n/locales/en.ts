@@ -143,6 +143,68 @@ const en = {
     openLetter: 'Read eulogy',
     closeLetter: 'Close',
   },
+  achievements: {
+    title: 'Achievements',
+    description: 'Select an item to view details.',
+    show: 'Show',
+    showLess: 'Show less',
+    items: [
+      {
+        title: 'Samsung C&T Career Achievements',
+        summary: 'Summary',
+        bullets: [
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        ],
+      },
+      {
+        title: 'Samsung C&T Career Achievements',
+        summary: 'Summary',
+        bullets: [
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        ],
+      },
+    ],
+  },
+  gallery: {
+    title: 'Gallery',
+    description: 'Click a photo or video to view it larger.',
+    loading: 'Loading media...',
+    empty: 'No media to display.',
+    error: 'Failed to load media.',
+    close: 'Close',
+    lightboxLabel: 'Media viewer',
+    filters: {
+      all: 'All',
+      photo: 'Photo',
+      video: 'Video',
+    },
+  },
+  location: {
+    title: 'Location',
+    tabs: {
+      google: 'Google',
+      kakao: 'Kakao',
+      osm: 'OSM',
+    },
+    mapQuery: 'Suwon Yeonhwajang Natural Burial Ground',
+    mapLabel: '{provider} map',
+    infoTitle: 'Location Info',
+    description: 'Please use the map below to find the memorial site and nearby facilities.',
+    placeName: 'Suwon Yeonhwajang Natural Burial Ground',
+    placeSub: 'Suwon, South Korea',
+    plotLabel: 'Plot',
+    plotValue: 'O-5853',
+    shareLabel: 'Copy/Share map',
+    embedFallbackTitle: '{provider} map preview',
+    embedFallbackDescription: 'Preview is unavailable. Open the map in a new tab.',
+    openMap: 'Open map',
+    kakaoLarge: 'Open large map',
+    kakaoAlt: 'Kakao Map',
+  },
 }
 
 export default en

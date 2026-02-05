@@ -121,9 +121,68 @@ const zhHant = {
         title: '安詳辭世',
         place: '韓國 大邱',
       },
+      {
+        year: '1948',
+        date: '09.30',
+        title: '出生於大邱',
+        place: '韓國 大邱',
+        icon: 'calendar_month',
+      },
+      {
+        year: '2026',
+        date: '01.19',
+        title: '安詳辭世',
+        place: '韓國 大邱',
+      },
+      {
+        year: '2026',
+        date: '01.19',
+        title: '安詳辭世',
+        place: '韓國 大邱',
+      },
     ],
     openLetter: '閱讀追悼文',
     closeLetter: '關閉',
+  },
+  achievements: {
+    title: '成就',
+    description: '選擇項目即可查看詳情。',
+    show: '展開',
+    showLess: '收起',
+    items: [
+      {
+        title: '三星物產任職成果',
+        summary: '摘要',
+        bullets: [
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        ],
+      },
+      {
+        title: '三星物產任職成果',
+        summary: '摘要',
+        bullets: [
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        ],
+      },
+    ],
+  },
+  gallery: {
+    title: '畫廊',
+    description: '點擊照片或影片即可放大查看。',
+    loading: '正在載入媒體…',
+    empty: '沒有可顯示的媒體。',
+    error: '媒體載入失敗。',
+    close: '關閉',
+    lightboxLabel: '媒體檢視器',
+    filters: {
+      all: '全部',
+      photo: '照片',
+      video: '影片',
+    },
   },
 }
 

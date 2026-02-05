@@ -121,9 +121,68 @@ const zhHans = {
         title: '安详辞世',
         place: '韩国 大邱',
       },
+      {
+        year: '1948',
+        date: '09.30',
+        title: '出生于大邱',
+        place: '韩国 大邱',
+        icon: 'calendar_month',
+      },
+      {
+        year: '2026',
+        date: '01.19',
+        title: '安详辞世',
+        place: '韩国 大邱',
+      },
+      {
+        year: '2026',
+        date: '01.19',
+        title: '安详辞世',
+        place: '韩国 大邱',
+      },
     ],
     openLetter: '阅读追悼文',
     closeLetter: '关闭',
+  },
+  achievements: {
+    title: '成就',
+    description: '选择项目即可查看详情。',
+    show: '展开',
+    showLess: '收起',
+    items: [
+      {
+        title: '三星物产任职成果',
+        summary: '摘要',
+        bullets: [
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        ],
+      },
+      {
+        title: '三星物产任职成果',
+        summary: '摘要',
+        bullets: [
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+          'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+        ],
+      },
+    ],
+  },
+  gallery: {
+    title: '画廊',
+    description: '点击照片或视频即可放大查看。',
+    loading: '正在加载媒体…',
+    empty: '暂无可显示的媒体。',
+    error: '媒体加载失败。',
+    close: '关闭',
+    lightboxLabel: '媒体查看器',
+    filters: {
+      all: '全部',
+      photo: '照片',
+      video: '视频',
+    },
   },
 }
 
