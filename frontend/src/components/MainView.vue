@@ -210,7 +210,7 @@ watch(
   <div class="h-full py-9">
     <div
       ref="stickyBarRef"
-      class="fixed top-0 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r from-white/0 to-white backdrop-blur filter blur-sm h-32 opacity-0"
+      class="fixed top-0 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r bg-white backdrop-blur filter blur-sm h-32 opacity-0"
     ></div>
     <div
       ref="miniBarRef"
