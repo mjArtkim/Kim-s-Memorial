@@ -184,6 +184,21 @@ const zhHant = {
       video: '影片',
     },
   },
+  guestbook: {
+    title: '留言簿',
+    description: '請留下簡短的追思。',
+    loading: '正在載入留言…',
+    empty: '尚無留言。',
+    error: '留言載入失敗。',
+    write: '撰寫',
+    nameLabel: '姓名',
+    namePlaceholder: '例如：張三',
+    contentLabel: '內容',
+    contentPlaceholder: '請輸入留言內容。',
+    cancel: '取消',
+    submit: '提交',
+    submitError: '提交失敗，請重試。',
+  },
 }
 
 export default zhHant

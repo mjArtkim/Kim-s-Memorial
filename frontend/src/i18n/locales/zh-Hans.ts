@@ -184,6 +184,21 @@ const zhHans = {
       video: '视频',
     },
   },
+  guestbook: {
+    title: '留言簿',
+    description: '请留下简短的追思。',
+    loading: '正在加载留言…',
+    empty: '暂无留言。',
+    error: '留言加载失败。',
+    write: '撰写',
+    nameLabel: '姓名',
+    namePlaceholder: '例如：张三',
+    contentLabel: '内容',
+    contentPlaceholder: '请输入留言内容。',
+    cancel: '取消',
+    submit: '提交',
+    submitError: '提交失败，请重试。',
+  },
 }
 
 export default zhHans

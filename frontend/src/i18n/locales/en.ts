@@ -205,6 +205,21 @@ const en = {
     kakaoLarge: 'Open large map',
     kakaoAlt: 'Kakao Map',
   },
+  guestbook: {
+    title: 'Guestbook',
+    description: 'Please leave a short message of remembrance.',
+    loading: 'Loading guestbook...',
+    empty: 'No guestbook entries yet.',
+    error: 'Failed to load guestbook.',
+    write: 'Write',
+    nameLabel: 'Name',
+    namePlaceholder: 'e.g. Hong Gill Dong',
+    contentLabel: 'Content',
+    contentPlaceholder: 'Please enter your message.',
+    cancel: 'Cancel',
+    submit: 'Submit',
+    submitError: 'Failed to submit. Please try again.',
+  },
 }
 
 export default en

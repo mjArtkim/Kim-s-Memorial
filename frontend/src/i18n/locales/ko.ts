@@ -206,6 +206,21 @@ const ko = {
     kakaoLarge: '지도 크게 보기',
     kakaoAlt: '카카오맵',
   },
+  guestbook: {
+    title: 'Guestbook',
+    description: '짧은 추모의 마음을 남겨주세요.',
+    loading: '방명록을 불러오는 중입니다.',
+    empty: '등록된 방명록이 없습니다.',
+    error: '방명록을 불러오는 데 실패했습니다.',
+    write: '작성하기',
+    nameLabel: 'Name',
+    namePlaceholder: 'e.g. Hong Gill Dong',
+    contentLabel: 'Content',
+    contentPlaceholder: '내용을 입력해주세요.',
+    cancel: '작성취소',
+    submit: '작성완료',
+    submitError: '작성에 실패했습니다. 다시 시도해 주세요.',
+  },
 }
 
 export default ko

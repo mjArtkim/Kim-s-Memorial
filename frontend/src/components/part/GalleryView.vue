@@ -36,6 +36,29 @@ const buildUrl = (fileName: string) => {
   return `/photos/${fileName}`
 }
 
+const getDevFallbackItems = (): MediaItem[] => {
+  if (!import.meta.env.DEV) return []
+  const modules = import.meta.glob(
+    '../../../../photos/*.{jpg,jpeg,png,gif,webp,bmp,avif,mp4,webm,ogg,mov,m4v}',
+    { eager: true, query: '?url', import: 'default' },
+  ) as Record<string, string>
+  const items = Object.entries(modules)
+    .map(([filePath, url]) => {
+      const name = filePath.split('/').pop() ?? filePath
+      const type = getMediaType(name)
+      if (!type) return null
+      return {
+        name,
+        url,
+        type,
+      }
+    })
+    .filter((item): item is MediaItem => item !== null)
+  return items.sort((a, b) =>
+    a.name.localeCompare(b.name, undefined, { numeric: true, sensitivity: 'base' }),
+  )
+}
+
 const filteredItems = computed(() => {
   if (activeFilter.value === 'all') return mediaItems.value
   return mediaItems.value.filter((item) => item.type === activeFilter.value)
@@ -121,8 +144,14 @@ const fetchMedia = async () => {
       .filter((item): item is MediaItem => item !== null)
     mediaItems.value = mapped
   } catch (error) {
-    hasError.value = true
-    mediaItems.value = []
+    const fallbackItems = getDevFallbackItems()
+    if (fallbackItems.length > 0) {
+      hasError.value = false
+      mediaItems.value = fallbackItems
+    } else {
+      hasError.value = true
+      mediaItems.value = []
+    }
   } finally {
     isLoading.value = false
   }
