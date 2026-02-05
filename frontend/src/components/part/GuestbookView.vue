@@ -152,7 +152,7 @@ onBeforeUnmount(() => {
       @click="openModal"
     >
       <span class="inline-flex items-center gap-2">
-        <span class="material-symbols-rounded text-[--mdark] text-xl">edit_note</span>
+        <span class="material-symbols-rounded text-[--mdark] text-xl">history_edu</span>
         <span>{{ t('guestbook.write') }}</span>
       </span>
     </button>
@@ -213,7 +213,7 @@ onBeforeUnmount(() => {
         class="relative w-full max-w-sm rounded-2xl bg-white px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)]"
       >
         <div class="flex items-center gap-2 text-base font-semibold">
-          <span class="material-symbols-rounded text-[--mdark]">edit_note</span>
+          <span class="material-symbols-rounded text-[--mdark]">history_edu</span>
           <span>{{ t('guestbook.write') }}</span>
         </div>
         <div class="mt-5 space-y-5">
