@@ -20,7 +20,7 @@
   }
   .section-title::after {
     content: '';
-    @apply absolute left-0 -bottom-2 h-[3px] w-full origin-left scale-x-100 bg-[--mblue];
+    @apply absolute left-0 -bottom-3 h-[3px] w-full origin-left scale-x-100 bg-[--mblue];
   }
 }
 * {
