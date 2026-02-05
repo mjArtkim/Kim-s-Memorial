@@ -233,28 +233,37 @@ onBeforeUnmount(() => {
       <p class="text-black/50">{{ t('gallery.empty') }}</p>
     </div>
 
-    <div v-else class="columns-2 gap-5 sm:columns-3">
+    <div v-else class="grid gap-5 grid-cols-3">
       <button
         v-for="item in pagedItems"
         :key="item.name"
         type="button"
-        class="mb-5 inline-block w-full break-inside-avoid overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.12)] transition hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(0,0,0,0.16)]"
+        class="relative w-full overflow-hidden rounded-2xl border border-black/10 bg-white shadow-[0_10px_20px_rgba(0,0,0,0.12)] transition hover:-translate-y-1 hover:shadow-[0_16px_30px_rgba(0,0,0,0.16)]"
         @click="openLightbox(item)"
       >
         <img
           v-if="item.type === 'image'"
           :src="item.url"
           :alt="item.name"
-          class="h-auto w-full object-cover"
+          class="h-[100px] w-full object-cover"
           loading="lazy"
         />
         <video
           v-else
           :src="item.url"
-          class="h-auto w-full object-cover"
-          controls
+          class="h-[100px] w-full object-cover pointer-events-none"
+          muted
+          playsinline
           preload="metadata"
         ></video>
+        <span
+          v-if="item.type === 'video'"
+          class="pointer-events-none absolute inset-0 flex items-center justify-center bg-black/10"
+        >
+          <span class="material-symbols-rounded text-4xl text-white/90 drop-shadow-sm">
+            play_circle
+          </span>
+        </span>
       </button>
     </div>
 
