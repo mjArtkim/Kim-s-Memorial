@@ -21,6 +21,7 @@ let photoTween: gsap.core.Tween | null = null
 let photoOpacityTween: gsap.core.Tween | null = null
 let handleResize: (() => void) | null = null
 let isMiniBarVisible = false
+let lastViewportWidth = 0
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -30,6 +31,13 @@ const scrollToTop = () => {
 
 onMounted(() => {
   if (!photoRef.value || !miniBarRef.value || !heroRef.value) return
+  ScrollTrigger.config({ ignoreMobileResize: true })
+
+  const getMotionState = () => {
+    const isDesktop = window.matchMedia('(min-width: 1024px)').matches
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    return { isDesktop, reduceMotion }
+  }
 
   const getHeroScrollEnd = () => {
     if (!heroRef.value) return '+=0'
@@ -48,35 +56,32 @@ onMounted(() => {
 
   const applyStartSize = () => {
     if (!photoRef.value) return
+    const { isDesktop, reduceMotion } = getMotionState()
     gsap.set(photoRef.value, {
       x: 0,
       y: 0,
       scale: 1,
       opacity: 1,
-      clipPath: 'circle(250% at 50% 50%)',
+      clipPath: isDesktop && !reduceMotion ? 'circle(250% at 50% 50%)' : 'none',
     })
-    ScrollTrigger.refresh()
   }
-
-  applyStartSize()
-  handleResize = () => {
-    applyStartSize()
-    updatePhotoTween()
-  }
-  window.addEventListener('resize', handleResize)
 
   const updatePhotoTween = () => {
     if (!photoRef.value) return
+    const { isDesktop, reduceMotion } = getMotionState()
     const photoRect = photoRef.value.getBoundingClientRect()
-    const targetScale = 0.8
-    const targetY = -Math.round(photoRect.height * 0.12)
+    const targetScale = isDesktop ? 0.8 : 0.94
+    const targetY = -Math.round(photoRect.height * (isDesktop ? 0.12 : 0.06))
     if (photoTween) photoTween.kill()
     if (photoOpacityTween) photoOpacityTween.kill()
-    photoTween = gsap.to(photoRef.value, {
+    if (reduceMotion) {
+      gsap.set(photoRef.value, { clearProps: 'transform,opacity,clipPath' })
+      return
+    }
+    const photoTweenVars: gsap.TweenVars = {
       x: 0,
       y: targetY,
       scale: targetScale,
-      clipPath: 'circle(100% at 50% 50%)',
       ease: 'none',
       scrollTrigger: {
         trigger: heroRef.value,
@@ -85,22 +90,43 @@ onMounted(() => {
         scrub: 0.3,
         invalidateOnRefresh: true,
       },
-    })
+    }
+    if (isDesktop) {
+      photoTweenVars.clipPath = 'circle(100% at 50% 50%)'
+    }
+    photoTween = gsap.to(photoRef.value, photoTweenVars)
 
-    photoOpacityTween = gsap.to(photoRef.value, {
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: heroRef.value,
-        start: getPhotoFadeStart,
-        end: 'bottom top',
-        scrub: 0.3,
-        invalidateOnRefresh: true,
-      },
-    })
+    if (isDesktop) {
+      photoOpacityTween = gsap.to(photoRef.value, {
+        opacity: 0,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: heroRef.value,
+          start: getPhotoFadeStart,
+          end: 'bottom top',
+          scrub: 0.3,
+          invalidateOnRefresh: true,
+        },
+      })
+    } else {
+      gsap.set(photoRef.value, { opacity: 1 })
+    }
   }
 
-  updatePhotoTween()
+  const syncPhotoAnimation = () => {
+    applyStartSize()
+    updatePhotoTween()
+    ScrollTrigger.refresh()
+  }
+
+  lastViewportWidth = window.innerWidth
+  syncPhotoAnimation()
+  handleResize = () => {
+    if (window.innerWidth === lastViewportWidth) return
+    lastViewportWidth = window.innerWidth
+    syncPhotoAnimation()
+  }
+  window.addEventListener('resize', handleResize)
 
   const showMiniBar = () => {
     if (!miniBarRef.value) return
@@ -172,8 +198,6 @@ onMounted(() => {
     onLeaveBack: hideMiniBar,
     invalidateOnRefresh: true,
   })
-
-  ScrollTrigger.refresh()
 })
 
 onBeforeUnmount(() => {
@@ -210,7 +234,7 @@ watch(
   <div class="h-full py-9 lg:py-0">
     <div
       ref="stickyBarRef"
-      class="fixed top-0 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r bg-white backdrop-blur filter blur-sm h-32 opacity-0 lg:h-30"
+      class="fixed -top-1 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r bg-white backdrop-blur filter blur-sm h-32 opacity-0 lg:h-30"
     ></div>
     <div
       ref="miniBarRef"
@@ -244,7 +268,7 @@ watch(
         <div class="lg:flex-auto flex lg:justify-center lg:ml-20">
           <div
             ref="photoRef"
-            class="h-full w-full overflow-hidden origin-top [will-change:transform lg:w-[340px] lg:h-[360px] lg:rounded-md lg:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
+            class="h-full w-full overflow-hidden origin-top transform-gpu [will-change:transform] lg:w-[340px] lg:h-[360px] lg:rounded-md lg:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
           >
             <img
               src="@/assets/img/main.png"

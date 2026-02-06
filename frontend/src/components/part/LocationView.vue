@@ -49,8 +49,8 @@ const project = (lat: number, lng: number, zoom: number) => {
 
 const unproject = (x: number, y: number, scale: number) => {
   const lng = (x / scale) * 360 - 180
-  const y2 = 0.5 - y / scale
-  const lat = toDegrees(Math.atan(Math.sinh(Math.PI * (1 - 2 * y2))))
+  const n = Math.PI - (2 * Math.PI * y) / scale
+  const lat = toDegrees(Math.atan(Math.sinh(n)))
   return { lat, lng }
 }
 
