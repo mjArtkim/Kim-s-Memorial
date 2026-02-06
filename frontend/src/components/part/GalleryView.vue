@@ -126,13 +126,17 @@ const fetchMedia = async () => {
     const response = await fetch('/api/gallery')
     if (!response.ok) throw new Error('Failed to fetch photos')
     const data = await response.json()
-    const rawList = Array.isArray(data) ? data : Array.isArray(data?.files) ? data.files : []
-    const files = rawList.filter((item): item is string => typeof item === 'string')
+    const rawList: unknown[] = Array.isArray(data)
+      ? data
+      : Array.isArray(data?.files)
+        ? data.files
+        : []
+    const files = rawList.filter((item: unknown): item is string => typeof item === 'string')
     const sortedFiles = files.sort((a, b) =>
       a.localeCompare(b, undefined, { numeric: true, sensitivity: 'base' }),
     )
     const mapped = sortedFiles
-      .map((fileName) => {
+      .map((fileName): MediaItem | null => {
         const type = getMediaType(fileName)
         if (!type) return null
         return {

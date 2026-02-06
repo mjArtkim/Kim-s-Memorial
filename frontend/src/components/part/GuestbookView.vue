@@ -60,7 +60,7 @@ const fetchGuestbook = async () => {
     const data = await response.json()
     const list = Array.isArray(data) ? data : []
     const mapped = list
-      .map((item) => {
+      .map((item): GuestbookEntry | null => {
         if (!item) return null
         const id =
           typeof item.id === 'number'
