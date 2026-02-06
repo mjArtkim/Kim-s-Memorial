@@ -170,7 +170,7 @@ onBeforeUnmount(() => {
   <div class="space-y-6">
     <div class="space-y-1">
       <div class="section-title">{{ t('gallery.title') }}</div>
-      <div class="flex flex-wrap gap-3 pb-3 pt-7">
+      <div class="flex flex-wrap gap-3 pb-3 pt-7 items-center">
         <button
           type="button"
           class="rounded-xl font-semibold bg-white px-5 py-2 shadow-[3px_3px_10px_rgba(0,0,0,0.12)] transition"
@@ -210,8 +210,9 @@ onBeforeUnmount(() => {
         >
           {{ t('gallery.filters.video') }}
         </button>
+        <p class="text-[--mblue] lg:block hidden">{{ t('gallery.description') }}</p>
       </div>
-      <p class="text-[--mblue]">{{ t('gallery.description') }}</p>
+      <p class="text-[--mblue] lg:hidden">{{ t('gallery.description') }}</p>
     </div>
 
     <div
@@ -233,7 +234,7 @@ onBeforeUnmount(() => {
       <p class="text-black/50">{{ t('gallery.empty') }}</p>
     </div>
 
-    <div v-else class="grid gap-5 grid-cols-3">
+    <div v-else class="grid gap-5 grid-cols-3 lg:grid-cols-6">
       <button
         v-for="item in pagedItems"
         :key="item.name"
@@ -245,13 +246,13 @@ onBeforeUnmount(() => {
           v-if="item.type === 'image'"
           :src="item.url"
           :alt="item.name"
-          class="h-[100px] w-full object-cover"
+          class="h-[100px] w-full object-cover lg:h-[150px]"
           loading="lazy"
         />
         <video
           v-else
           :src="item.url"
-          class="h-[100px] w-full object-cover pointer-events-none"
+          class="h-[100px] w-full object-cover pointer-events-none lg:h-[150px]"
           muted
           playsinline
           preload="metadata"

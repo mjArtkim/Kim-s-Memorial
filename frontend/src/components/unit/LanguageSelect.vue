@@ -13,10 +13,10 @@ const handleLocaleChange = (event: Event) => {
 
 <template>
   <label class="inline-flex items-center gap-2 text-xs font-semibold">
-    <div class="text-[var(--muted)] material-symbols-rounded">language</div>
+    <div class="material-symbols-rounded lg:text-white/90">language</div>
     <div class="relative">
       <select
-        class="appearance-none rounded-full border border-[var(--stroke)] bg-[var(--surface)] px-3 py-1 pr-7 text-xs font-semibold text-[var(--text)] focus:outline-none focus:border-neonpink"
+        class="appearance-none rounded-full border border-black/50 bg-white/90 px-3 py-1 pr-7 text-xs font-semibold text-[var(--text)] focus:outline-none focus:border-neonpink  lg:border-black/0"
         v-model="locale"
         @change="handleLocaleChange"
       >

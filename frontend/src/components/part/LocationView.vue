@@ -151,105 +151,106 @@ onBeforeUnmount(() => {
         {{ tab.label }}
       </button>
     </div>
-
-    <div
-      class="rounded-2xl border border-black/10 bg-white shadow-[0_12px_28px_rgba(0,0,0,0.12)] overflow-hidden"
-    >
-      <div ref="mapFrameRef" class="relative h-[260px] sm:h-[320px]">
-        <a
-          :href="activeConfig.shareUrl"
-          target="_blank"
-          rel="noreferrer"
-          class="absolute right-3 top-3 z-10 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[--mdark] shadow-[0_6px_16px_rgba(0,0,0,0.12)] backdrop-blur transition hover:border-black/20"
-        >
-          <span class="material-symbols-rounded text-base">open_in_new</span>
-          {{ t('location.openMap') }}
-        </a>
-        <div v-if="activeMap === 'kakao'" class="flex h-full w-full flex-col">
-          <a
-            :href="kakaoStaticMap.linkUrl"
-            target="_blank"
-            rel="noreferrer"
-            class="block flex-1"
-          >
-            <img
-              :src="kakaoStaticMap.imageUrl"
-              :alt="t('location.kakaoAlt')"
-              class="h-full w-full object-cover"
-            />
-          </a>
-          <div
-            class="flex items-center justify-between gap-3 border-t border-black/10 bg-white/90 px-3 py-2 text-[11px] font-semibold text-black/70"
-          >
-            <img :src="kakaoStaticMap.logoUrl" :alt="t('location.kakaoAlt')" class="h-4" />
-            <a
-              :href="kakaoStaticMap.linkUrl"
-              target="_blank"
-              rel="noreferrer"
-              class="text-black/70 transition hover:text-black"
-            >
-              {{ t('location.kakaoLarge') }}
-            </a>
-          </div>
-        </div>
-        <iframe
-          v-else-if="activeConfig.embedUrl"
-          :key="activeMap"
-          :src="activeConfig.embedUrl"
-          class="block h-full w-full border-0"
-          loading="lazy"
-          referrerpolicy="no-referrer-when-downgrade"
-          allowfullscreen
-          :aria-label="t('location.mapLabel', { provider: activeConfig.label })"
-        ></iframe>
-        <div
-          v-else
-          class="h-full w-full flex flex-col items-center justify-center gap-3 bg-[radial-gradient(circle_at_top,#f5f7ff,#ffffff)]"
-        >
-          <div class="text-lg font-semibold text-black/70">
-            {{ t('location.embedFallbackTitle', { provider: activeConfig.label }) }}
-          </div>
-          <p class="text-sm text-black/50 text-center px-6">
-            {{ t('location.embedFallbackDescription') }}
-          </p>
+    <div class="space-y-8 lg:grid lg:grid-cols-2 lg:gap-6 lg:space-y-0">
+      <div
+        class="rounded-2xl border border-black/10 bg-white shadow-[0_12px_28px_rgba(0,0,0,0.12)] overflow-hidden"
+      >
+        <div ref="mapFrameRef" class="relative h-[260px] lg:h-[420px]">
           <a
             :href="activeConfig.shareUrl"
             target="_blank"
             rel="noreferrer"
-            class="inline-flex items-center gap-2 rounded-full border border-[--mblue] bg-white px-4 py-2 text-sm font-semibold text-[--mdark] transition hover:border-[--mdark]"
+            class="absolute right-3 top-3 z-10 inline-flex items-center gap-2 rounded-full border border-black/10 bg-white/90 px-3 py-1.5 text-xs font-semibold text-[--mdark] shadow-[0_6px_16px_rgba(0,0,0,0.12)] backdrop-blur transition hover:border-black/20"
           >
             <span class="material-symbols-rounded text-base">open_in_new</span>
             {{ t('location.openMap') }}
           </a>
-        </div>
-      </div>
-    </div>
-
-    <div
-      class="rounded-2xl border border-black/10 bg-white px-6 py-6 shadow-[0_12px_30px_rgba(0,0,0,0.12)]"
-    >
-      <div class="text-xl font-semibold">{{ t('location.infoTitle') }}</div>
-      <p class="mt-4 text-black/60 leading-7">
-        {{ t('location.description') }}
-      </p>
-      <div class="mt-6 space-y-4">
-        <div v-for="(item, index) in infoItems" :key="index" class="flex items-start gap-3">
-          <span class="material-symbols-rounded text-[--mdark] text-xl">{{ item.icon }}</span>
-          <div>
-            <div class="font-semibold text-black/80">{{ item.title }}</div>
-            <div v-if="item.subtitle" class="text-sm text-black/60">{{ item.subtitle }}</div>
+          <div v-if="activeMap === 'kakao'" class="flex h-full w-full flex-col">
+            <a
+              :href="kakaoStaticMap.linkUrl"
+              target="_blank"
+              rel="noreferrer"
+              class="block flex-1"
+            >
+              <img
+                :src="kakaoStaticMap.imageUrl"
+                :alt="t('location.kakaoAlt')"
+                class="h-full w-full object-cover"
+              />
+            </a>
+            <div
+              class="flex items-center justify-between gap-3 border-t border-black/10 bg-white/90 px-3 py-2 text-[11px] font-semibold text-black/70"
+            >
+              <img :src="kakaoStaticMap.logoUrl" :alt="t('location.kakaoAlt')" class="h-4" />
+              <a
+                :href="kakaoStaticMap.linkUrl"
+                target="_blank"
+                rel="noreferrer"
+                class="text-black/70 transition hover:text-black"
+              >
+                {{ t('location.kakaoLarge') }}
+              </a>
+            </div>
+          </div>
+          <iframe
+            v-else-if="activeConfig.embedUrl"
+            :key="activeMap"
+            :src="activeConfig.embedUrl"
+            class="block h-full w-full border-0"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            allowfullscreen
+            :aria-label="t('location.mapLabel', { provider: activeConfig.label })"
+          ></iframe>
+          <div
+            v-else
+            class="h-full w-full flex flex-col items-center justify-center gap-3 bg-[radial-gradient(circle_at_top,#f5f7ff,#ffffff)]"
+          >
+            <div class="text-lg font-semibold text-black/70">
+              {{ t('location.embedFallbackTitle', { provider: activeConfig.label }) }}
+            </div>
+            <p class="text-sm text-black/50 text-center px-6">
+              {{ t('location.embedFallbackDescription') }}
+            </p>
+            <a
+              :href="activeConfig.shareUrl"
+              target="_blank"
+              rel="noreferrer"
+              class="inline-flex items-center gap-2 rounded-full border border-[--mblue] bg-white px-4 py-2 text-sm font-semibold text-[--mdark] transition hover:border-[--mdark]"
+            >
+              <span class="material-symbols-rounded text-base">open_in_new</span>
+              {{ t('location.openMap') }}
+            </a>
           </div>
         </div>
       </div>
-      <a
-        :href="activeConfig.shareUrl"
-        target="_blank"
-        rel="noreferrer"
-        class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[--mdark] transition hover:text-black"
+
+      <div
+        class="rounded-2xl bg-white px-6 py-6 shadow-[0_12px_30px_rgba(0,0,0,0.12)] lg:flex lg:flex-col lg:justify-between"
       >
-        <span class="material-symbols-rounded text-base">link</span>
-        <span>{{ t('location.shareLabel') }}</span>
-      </a>
+        <div class="text-xl font-semibold lg:text-2xl">{{ t('location.infoTitle') }}</div>
+        <p class="mt-4 text-black/60 leading-7">
+          {{ t('location.description') }}
+        </p>
+        <div class="mt-6 space-y-4">
+          <div v-for="(item, index) in infoItems" :key="index" class="flex items-start gap-3">
+            <span class="material-symbols-rounded text-[--mdark] text-xl">{{ item.icon }}</span>
+            <div>
+              <div class="font-semibold text-black/80">{{ item.title }}</div>
+              <div v-if="item.subtitle" class="text-sm text-black/60">{{ item.subtitle }}</div>
+            </div>
+          </div>
+        </div>
+        <a
+          :href="activeConfig.shareUrl"
+          target="_blank"
+          rel="noreferrer"
+          class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-[--mdark] transition hover:text-black"
+        >
+          <span class="material-symbols-rounded text-base">link</span>
+          <span>{{ t('location.shareLabel') }}</span>
+        </a>
+      </div>
     </div>
   </div>
 </template>

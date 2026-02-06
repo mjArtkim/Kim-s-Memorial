@@ -22,6 +22,14 @@
     content: '';
     @apply absolute left-0 -bottom-3 h-[3px] w-full origin-left scale-x-100 bg-[--mblue];
   }
+  .ww-wrap 
+  {
+    @apply w-full max-w-[1300px] mx-auto;
+  }
+  .ss-wrap 
+  {
+    @apply w-full max-w-[1200px] mx-auto;
+  }
 }
 * {
   padding: 0;

@@ -79,14 +79,14 @@ onBeforeUnmount(() => {
         <li v-for="(eulogy, index) in eulogies" :key="`${eulogy.name}-${index}`">
           <button
             type="button"
-            class="w-full text-left rounded-xl border border-black/10 px-5 py-4 shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_24px_rgba(0,0,0,0.12)]"
+            class="w-full text-left rounded-xl border border-black/10 px-5 py-4 shadow-[0_8px_20px_rgba(0,0,0,0.08)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_24px_rgba(0,0,0,0.12)] lg:flex lg:items-center lg:justify-between"
             @click="openEulogy(index)"
           >
             <div class="flex items-center">
               <div class="text-xl font-semibold mr-3">{{ eulogy.name }}</div>
               <div class="text-sm text-black/60">{{ eulogy.title }}</div>
             </div>
-            <div class="mt-3 text-sm font-semibold text-[--mblue]">
+            <div class="mt-3 text-sm font-semibold text-[--mblue] lg:mt-0">
               {{ t('intro.openLetter') }}
             </div>
           </button>
@@ -103,7 +103,7 @@ onBeforeUnmount(() => {
         <li
           v-for="(item, index) in timelineItems"
           :key="`timeline-${item.year}-${item.date}-${index}`"
-          class="grid grid-cols-[0.8fr_1.5fr] gap-6 sm:grid-cols-[96px_56px_1fr] sm:gap-8"
+          class="grid grid-cols-[0.8fr_1.5fr] gap-6 lg:grid-cols-[0.5fr_3fr]"
         >
           <div class="flex justify-between">
             <div class="text-[--mdark]">
@@ -126,7 +126,7 @@ onBeforeUnmount(() => {
           </div>
           <div class="pb-6 sm:pb-8">
             <div
-              class="w-full max-w-2xl rounded-xl border bg-white px-5 py-3 shadow-[3px_3px_14px_rgba(0,0,0,0.15)]"
+              class="w-full max-w-2xl rounded-xl border bg-white px-5 py-3 shadow-[3px_3px_14px_rgba(0,0,0,0.15)] lg:max-w-none"
               :class="item.highlight ? 'border-[--mdark]' : 'border-black/10'"
             >
               <div class="text-xl font-semibold text-black/90">
