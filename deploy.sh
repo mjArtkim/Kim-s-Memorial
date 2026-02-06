@@ -40,6 +40,13 @@ fi
 echo "🚀 Starting Kim's Memorial deployment script..."
 cd "$PROJECT_DIR_LOCAL"
 
+# --- NEW: Build Frontend ---
+echo "📦 Building Frontend..."
+cd frontend
+npm install
+npm run build
+cd ..
+
 # --- NEW: Clean up old local images to save space/time ---
 echo "🧹 Cleaning up old local image tags..."
 sudo docker images --format "{{.Repository}}:{{.Tag}}" | grep "^${IMAGE_NAME}:" | grep -v ":latest$" | xargs --no-run-if-empty sudo docker rmi || true

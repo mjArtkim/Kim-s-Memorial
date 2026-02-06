@@ -4,7 +4,7 @@ services:
     container_name: memorial-app
     restart: always
     ports:
-      - "80:7554"
+      - "7554:7554"
     volumes:
-      - ./data:/app/backend/data
-      - ./photos:/app/backend/photos
+      - ./data:/app/data
+      - ./photos:/app/photos
