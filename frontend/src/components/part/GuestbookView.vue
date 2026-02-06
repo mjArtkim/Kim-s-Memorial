@@ -4,7 +4,7 @@ import { useI18n } from 'vue-i18n'
 
 type GuestbookEntry = {
   id: number
-  date: string
+  date?: string
   content: string
   name: string
   highlight?: boolean
@@ -47,7 +47,7 @@ const formatDateValue = (value: string | Date) => {
   if (value instanceof Date) return formatDate(value)
   const normalized = value.includes('T') ? value : value.replace(' ', 'T')
   const parsed = new Date(normalized)
-  if (Number.isNaN(parsed.getTime())) return value
+  if (Number.isNaN(parsed.getTime())) return ''
   return formatDate(parsed)
 }
 
@@ -60,7 +60,7 @@ const fetchGuestbook = async () => {
     const data = await response.json()
     const list = Array.isArray(data) ? data : []
     const mapped = list
-      .map((item) => {
+      .map((item): GuestbookEntry | null => {
         if (!item) return null
         const id =
           typeof item.id === 'number'
@@ -70,13 +70,15 @@ const fetchGuestbook = async () => {
               : Date.now()
         const name = typeof item.name === 'string' ? item.name : ''
         const content = typeof item.content === 'string' ? item.content : ''
-        const createdAt =
-          typeof item.created_at === 'string' ? item.created_at : new Date().toISOString()
+        const date =
+          typeof item.created_at === 'string' && item.created_at
+            ? formatDateValue(item.created_at)
+            : ''
         return {
           id,
           name,
           content,
-          date: formatDateValue(createdAt),
+          date,
         }
       })
       .filter((item): item is GuestbookEntry => item !== null)
@@ -141,22 +143,23 @@ onBeforeUnmount(() => {
 </script>
 <template>
   <div class="space-y-6">
-    <div class="space-y-3">
-      <div class="section-title">{{ t('guestbook.title') }}</div>
-      <p class="text-black/50">{{ t('guestbook.description') }}</p>
+    <div class="space-y-3 lg:space-y-0 lg:flex lg:items-center lg:justify-between">
+      <div class="space-y-5">
+        <div class="section-title">{{ t('guestbook.title') }}</div>
+        <p class="text-black/50">{{ t('guestbook.description') }}</p>
+      </div>
+
+      <button
+        type="button"
+        class="w-full rounded-md border-black/10 bg-white px-3 py-2 font-semibold shadow-[0_8px_18px_rgba(0,0,0,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_26px_rgba(0,0,0,0.14)] lg:w-48 lg:flex-shrink-0"
+        @click="openModal"
+      >
+        <span class="inline-flex items-center gap-2">
+          <span class="material-symbols-rounded text-[--mdark] text-xl">history_edu</span>
+          <span>{{ t('guestbook.write') }}</span>
+        </span>
+      </button>
     </div>
-
-    <button
-      type="button"
-      class="w-full rounded-xl border-black/10 bg-white px-5 py-3 text-sm font-semibold shadow-[0_8px_18px_rgba(0,0,0,0.1)] transition hover:-translate-y-0.5 hover:shadow-[0_14px_26px_rgba(0,0,0,0.14)]"
-      @click="openModal"
-    >
-      <span class="inline-flex items-center gap-2">
-        <span class="material-symbols-rounded text-[--mdark] text-xl">history_edu</span>
-        <span>{{ t('guestbook.write') }}</span>
-      </span>
-    </button>
-
     <div
       v-if="isLoading"
       class="rounded-2xl border border-dashed border-black/10 py-16 text-center"
@@ -182,7 +185,7 @@ onBeforeUnmount(() => {
         :key="entry.id"
         class="rounded-2xl border bg-white px-5 py-5 shadow-[0_8px_20px_rgba(0,0,0,0.08)]"
       >
-        <div class="text-sm font-semibold text-black/70">
+        <div v-if="entry.date" class="text-sm font-semibold text-black/70">
           {{ entry.date }}
         </div>
         <p class="mt-3 whitespace-pre-line text-[15px] leading-6 text-black/70">
@@ -210,7 +213,7 @@ onBeforeUnmount(() => {
         @click="closeModal"
       ></button>
       <div
-        class="relative w-full max-w-sm rounded-2xl bg-white px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)]"
+        class="relative w-full max-w-sm rounded-2xl bg-white px-5 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.25)] lg:min-w-[600px]"
       >
         <div class="flex items-center gap-2 text-base font-semibold">
           <span class="material-symbols-rounded text-[--mdark]">history_edu</span>

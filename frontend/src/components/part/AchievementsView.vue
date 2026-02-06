@@ -36,8 +36,19 @@ const isOpen = (index: number) => openIndex.value === index
         :key="`${item.title}-${index}`"
         class="rounded-xl border border-black/10 bg-white px-6 py-5 shadow-[3px_3px_24px_rgba(0,0,0,0.1)]"
       >
-        <div class="text-xl font-semibold text-black/90">
-          {{ item.title }}
+        <div class="grid grid-cols-[1fr_0.2fr] items-center">
+          <div class="text-xl font-semibold text-black/90">
+            {{ item.title }}
+          </div>
+          <button
+            type="button"
+            class="w-full text-right text-sm text-[--mblue] transition hover:text-[--mdark] hidden lg:block"
+            :aria-expanded="isOpen(index)"
+            :aria-controls="`achievement-details-${index}`"
+            @click="toggleAchievement(index)"
+          >
+            {{ isOpen(index) ? t('achievements.showLess') : t('achievements.show') }}
+          </button>
         </div>
         <div class="mt-3 font-medium text-black/50">
           {{ item.summary }}
@@ -52,16 +63,15 @@ const isOpen = (index: number) => openIndex.value === index
             </li>
           </ul>
         </div>
-        <button
-          type="button"
-          class="w-full text-right text-sm text-[--mblue] transition hover:text-[--mdark]"
-          :class="isOpen(index) ? 'mt-5' : 'mt-4'"
-          :aria-expanded="isOpen(index)"
-          :aria-controls="`achievement-details-${index}`"
-          @click="toggleAchievement(index)"
-        >
-          {{ isOpen(index) ? t('achievements.showLess') : t('achievements.show') }}
-        </button>
+          <button
+            type="button"
+            class="w-full text-right text-sm text-[--mblue] transition hover:text-[--mdark] lg:hidden"
+            :aria-expanded="isOpen(index)"
+            :aria-controls="`achievement-details-${index}`"
+            @click="toggleAchievement(index)"
+          >
+            {{ isOpen(index) ? t('achievements.showLess') : t('achievements.show') }}
+          </button>
       </article>
     </div>
   </div>

@@ -207,14 +207,14 @@ watch(
 </script>
 
 <template>
-  <div class="h-full py-9">
+  <div class="h-full py-9 lg:py-0">
     <div
       ref="stickyBarRef"
-      class="fixed top-0 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r from-white/0 to-white backdrop-blur filter blur-sm h-32 opacity-0"
+      class="fixed top-0 left-0 right-0 z-40 flex flex-nowrap overflow-x-auto gap-4 px-7 mt-5bg-gradient-to-r bg-white backdrop-blur filter blur-sm h-32 opacity-0 lg:h-30"
     ></div>
     <div
       ref="miniBarRef"
-      class="fixed left-1/2 top-7 z-50 inline-flex items-center gap-2.5 rounded-md bg-white/90 px-3 py-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.08)] opacity-0 cursor-pointer"
+      class="fixed left-1/2 top-4 z-50 inline-flex items-center gap-2.5 rounded-md bg-white/90 px-3 py-1.5 shadow-[0_6px_20px_rgba(0,0,0,0.08),0_1px_4px_rgba(0,0,0,0.08)] opacity-0 cursor-pointer lg:shadow-none"
       role="button"
       tabindex="0"
       aria-label="Scroll to top"
@@ -227,21 +227,24 @@ watch(
           class="h-full w-full object-cover block"
         />
       </div>
-      <div class="text-base font-semibold">{{ t('app.title') }}</div>
+      <div class="text-base font-semibold lg:text-xl">{{ t('app.title') }}</div>
     </div>
-    <div class="h-screen grid grid-rows-[auto_1fr] gap-8">
-      <LanguageSelect class="px-7 justify-self-end"></LanguageSelect>
-      <div ref="heroRef" class="grid scroll-mt-24 grid-rows-[auto_1fr]">
-        <div class="px-7 flex flex-col justify-center items-center gap-10">
-          <div class="text-6xl font-bold">Memorial</div>
+    <div class="h-screen grid grid-rows-[auto_1fr] gap-8 lg:pt-5 lg:block relative lg:h-full">
+      <div class="hero-shell"></div>
+      <LanguageSelect class="px-7 justify-self-end lg:absolute lg:top-5 lg:right-5"></LanguageSelect>
+      <div ref="heroRef" class="grid scroll-mt-24 grid-rows-[auto_1fr] lg:flex lg:flex-row-reverse lg:justify-centers lg:items-end lg:h-[65vh] lg:ss-wrap">
+        <div class="px-7 flex flex-col justify-center items-center gap-10 lg:flex-auto lg:items-start">
+          <div class="text-6xl font-bold">Memorial</div> 
           <div class="text-5xl font-semibold">{{ t('app.title') }}</div>
-          <div class="text-base">1948.09.30 ~ 2026.01.19</div>
-          <div class="text-base">South Korea</div>
+          <div class="flex flex-col gap-10 justify-center items-center lg:items-start lg:flex-row">
+            <div class="text-base">1948.09.30 ~ 2026.01.19</div>
+            <div class="text-base">South Korea</div>
+          </div>
         </div>
-        <div>
+        <div class="lg:flex-auto flex lg:justify-center lg:ml-20">
           <div
             ref="photoRef"
-            class="h-full w-full overflow-hidden origin-top [will-change:transform]"
+            class="h-full w-full overflow-hidden origin-top [will-change:transform lg:w-[340px] lg:h-[360px] lg:rounded-md lg:shadow-[0_12px_28px_rgba(0,0,0,0.12)]"
           >
             <img
               src="@/assets/img/main.png"
@@ -252,27 +255,59 @@ watch(
         </div>
       </div>
     </div>
-    <section class="flex flex-col items-center px-7 gap-12 scroll-mt-24 pb-10">
-      <div class="material-symbols-rounded text-[--mblue] text-5xl">candle</div>
-      <div class="text-center text-[18px]">
-        {{ t('app.description') }}
-      </div>
-    </section>
-    <GndBar />
-    <section id="intro" class="p-7 scroll-mt-24">
-      <IntroView />
-    </section>
-    <section id="achiev" class="p-7 scroll-mt-24">
-      <AchievementsView />
-    </section>
-    <section id="gall" class="p-7 scroll-mt-24">
-      <GalleryView />
-    </section>
-    <section id="loca" class="p-7 scroll-mt-24">
-      <LocationView />
-    </section>
-    <section id="guest" class="p-7 scroll-mt-24">
-      <GuestbookView />
+    <section class="lg:ss-wrap">
+      <section class="flex flex-col items-center px-7 gap-12 scroll-mt-24 pb-10 lg:py-4 lg:gap-10">
+        <div class="material-symbols-rounded text-[--mblue] text-5xl pt-4">candle</div>
+        <div class="text-center text-[18px]">
+          {{ t('app.description') }}
+        </div>
+      </section>
+      <GndBar />
+      <section id="intro" class="p-7 scroll-mt-24">
+        <IntroView />
+      </section>
+      <section id="achiev" class="p-7 scroll-mt-24">
+        <AchievementsView />
+      </section>
+      <section id="gall" class="p-7 scroll-mt-24">
+        <GalleryView />
+      </section>
+      <section id="loca" class="p-7 scroll-mt-24">
+        <LocationView />
+      </section>
+      <section id="guest" class="p-7 scroll-mt-24">
+        <GuestbookView />
+      </section>
+      <section class="ss-wrap px-7 py-10">
+        <div>
+          <div class="text-[#8198A9]">© 2026, kimsmemorial</div>
+          <div class="text-[#8198A9]">This memorial site was thoughtfully created by <a href="https://www.ideartm.com" target="_blank" class="font-bold lg:hover:text-[--mblue]">Minji Kim</a></div>
+        </div>
+      </section>
     </section>
   </div>
 </template>
+
+<style scoped>
+.hero-shell {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .hero-shell {
+    position: absolute;
+    display: block;
+    content: '';
+    clear: both;
+    top: -5px;
+    left: 0;
+    width: 100%;
+    background-image: url('@/assets/img/pc-bg.png');
+    background-size: cover;
+    background-position: center top;
+    background-repeat: no-repeat;
+    height: 300px;
+    z-index: -5;
+  }
+}
+</style>
