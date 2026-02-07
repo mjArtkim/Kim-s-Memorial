@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, onBeforeUnmount, onMounted, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 type MapKey = 'google' | 'kakao' | 'osm'
@@ -9,8 +9,48 @@ type MapConfig = {
   shareUrl: string
 }
 
-const { t } = useI18n()
-const activeMap = ref<MapKey>('google')
+const { t, locale } = useI18n()
+
+const getPreferredMap = (currentLocale: string): MapKey => {
+  const normalized = (currentLocale || '').toLowerCase()
+  return 'google'
+}
+
+const getGoogleLanguage = (currentLocale: string) => {
+  const normalized = (currentLocale || '').toLowerCase()
+  if (normalized.startsWith('ko')) return 'ko'
+  if (
+    normalized.includes('hant') ||
+    normalized.includes('-tw') ||
+    normalized.includes('-hk') ||
+    normalized.includes('-mo')
+  ) {
+    return 'zh-TW'
+  }
+  if (normalized.startsWith('zh')) return 'zh-CN'
+  if (normalized.startsWith('en')) return 'en'
+  return 'en'
+}
+
+const getOsmLocale = (currentLocale: string) => {
+  const normalized = (currentLocale || '').toLowerCase()
+  if (normalized.startsWith('ko')) return 'ko'
+  if (
+    normalized.includes('hant') ||
+    normalized.includes('-tw') ||
+    normalized.includes('-hk') ||
+    normalized.includes('-mo')
+  ) {
+    return 'zh-TW'
+  }
+  if (normalized.startsWith('zh')) return 'zh-CN'
+  if (normalized.startsWith('en')) return 'en'
+  return 'en'
+}
+
+const activeMap = ref<MapKey>(getPreferredMap(locale.value))
+const googleLang = computed(() => getGoogleLanguage(locale.value))
+const osmLocale = computed(() => getOsmLocale(locale.value))
 
 const mapCenter = { lat: 37.291218, lng: 127.08295 }
 const mapZoom = 19
@@ -79,11 +119,13 @@ const mapConfig = computed<Record<MapKey, MapConfig>>(() => {
   const query = encodeURIComponent(mapQuery.value)
   const { lat, lng } = mapCenter
   const { left, bottom, right, top } = osmBBox.value
+  const lang = encodeURIComponent(googleLang.value)
+  const osmLang = encodeURIComponent(osmLocale.value)
   return {
     google: {
       label: t('location.tabs.google'),
-      embedUrl: `https://maps.google.com/maps?q=${query}&z=${mapZoom}&output=embed`,
-      shareUrl: `https://maps.google.com/?q=${query}`,
+      embedUrl: `https://maps.google.com/maps?q=${query}&z=${mapZoom}&hl=${lang}&output=embed`,
+      shareUrl: `https://maps.google.com/?q=${query}&hl=${lang}`,
     },
     kakao: {
       label: t('location.tabs.kakao'),
@@ -92,8 +134,8 @@ const mapConfig = computed<Record<MapKey, MapConfig>>(() => {
     },
     osm: {
       label: t('location.tabs.osm'),
-      embedUrl: `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}&layer=mapnik&marker=${lat}%2C${lng}`,
-      shareUrl: `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}#map=${mapZoom}/${lat}/${lng}`,
+      embedUrl: `https://www.openstreetmap.org/export/embed.html?bbox=${left}%2C${bottom}%2C${right}%2C${top}&layer=mapnik&marker=${lat}%2C${lng}&locale=${osmLang}`,
+      shareUrl: `https://www.openstreetmap.org/?mlat=${lat}&mlon=${lng}&locale=${osmLang}#map=${mapZoom}/${lat}/${lng}`,
     },
   }
 })
@@ -111,6 +153,10 @@ const infoItems = computed(() => [
     title: `${t('location.plotLabel')}: ${t('location.plotValue')}`,
   },
 ])
+
+const setActiveMap = (key: MapKey) => {
+  activeMap.value = key
+}
 
 onMounted(() => {
   updateFrameSize()
@@ -130,6 +176,14 @@ onBeforeUnmount(() => {
     window.removeEventListener('resize', updateFrameSize)
   }
 })
+
+watch(
+  locale,
+  (nextLocale) => {
+    activeMap.value = getPreferredMap(nextLocale)
+  },
+  { immediate: true },
+)
 </script>
 <template>
   <div class="space-y-8">
@@ -146,7 +200,7 @@ onBeforeUnmount(() => {
             : 'text-black/70 hover:border-black/20'
         "
         :aria-pressed="activeMap === tab.key"
-        @click="activeMap = tab.key"
+        @click="setActiveMap(tab.key)"
       >
         {{ tab.label }}
       </button>
